@@ -1,0 +1,421 @@
+/* html */
+
+.barcode {
+  white-space: pre; /* or pre-wrap if you want wrapping to still work.*/
+}
+
+button {
+  background-color: white;
+  border: none;
+}
+
+button:focus {
+  outline: none;
+}
+
+body {
+  background: linear-gradient(
+      rgba(255, 255, 255, 0.5),
+      rgba(255, 255, 255, 0.5)
+    ),
+    url("../images/p.jpg");
+  width: 100%;
+  overflow-x: hidden;
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+hr {
+  background-color: white;
+  filter: brightness(90%);
+  height: 5px;
+}
+
+.hrHome {
+  background-color: black;
+  height: 2px;
+}
+
+textarea {
+  max-width: 79.6%;
+  resize: none;
+  overflow: auto;
+  display: inline;
+}
+
+/* start opening page */
+
+#startPage {
+  height: 100vh;
+  text-align: center;
+  color: #fcfcfc;
+  background: linear-gradient(rgba(0, 0, 0, 0.55), rgba(0, 0, 0, 0.55)),
+    url("images/j.png");
+  -webkit-background-size: cover;
+  background-size: cover;
+}
+
+#startPageTop {
+  padding-top: 15px;
+  font-family: "Dancing Script", cursive;
+  font-size: 4rem;
+  filter: brightness(95%);
+}
+
+#startPageHeading {
+  font-family: "Handlee", cursive;
+  font-size: 4.2rem;
+  line-height: 1.2;
+  padding: 15% 25% 35px 25%;
+}
+
+#getStartedLink {
+  font-size: 2rem;
+  color: white;
+  border: white 1px solid;
+  border-radius: 35px;
+  font-family: "Handlee", cursive;
+  padding: 10px 21px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  transition: 0.3s;
+}
+
+#getStartedLink:hover {
+  background-color: #eff7e1;
+  box-shadow: 4px 4px black;
+  color: black;
+  border: black 2px solid;
+}
+
+/* add memory card styles */
+
+.addMemoryButton {
+  font-size: 5rem;
+  color: lightgray;
+  padding: 0;
+  outline: none;
+  margin-left: 38%;
+  transition: 0.3s;
+}
+
+.memoryLine {
+  font-size: 2.5rem;
+  margin: 8%;
+  color: lightgray;
+  text-align: center;
+}
+
+.mainHeader {
+  margin-top: 10px;
+  margin-bottom: 5px;
+  font-size: 70px;
+  text-align: center;
+  font-family: "Lora", serif;
+}
+
+.fileUpload {
+  width: 16.5rem;
+  height: 21.5rem;
+  display: inline-block;
+  margin: 32px 40px 90px 40px;
+  left: 70px;
+}
+
+.upAndDel:hover .actualUpAndDel {
+  box-shadow: 0 0 23px gray;
+  border: 2px solid black;
+  z-index: 0;
+}
+
+#updateButton,
+#deleteButton {
+  position: absolute;
+  margin-left: 35%;
+  z-index: -1;
+  top: 0;
+  padding: 7px;
+  background-color: blue;
+  color: white;
+  border-radius: 50px;
+  box-shadow: 0 0 12px gray;
+}
+
+/* modal  */
+
+.dropZone {
+  font-size: 1.2rem;
+  margin-bottom: 0;
+}
+
+.closeButton {
+  outline: none;
+  font-size: 1.8rem;
+  margin-right: 10px;
+  margin-top: -2px;
+}
+
+.labelCaption {
+  font-size: 1.1rem;
+  display: block;
+  margin-top: 0px;
+}
+
+.modalBodyUpdate {
+  padding-left: 1.7rem;
+}
+
+.modalText {
+  font-size: 1.4rem;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+.updateAndUploadModalButton {
+  text-align: center;
+  font-size: 1.1rem;
+  background-color: #6795a5;
+  border-radius: 7px;
+  border: 1.6px solid black;
+  margin-top: 20px;
+}
+
+.deleteAndCloseModalButton {
+  text-align: center;
+  font-size: 1.2rem;
+  margin-left: 6px;
+  margin-right: 6px;
+  background-color: #6795a5;
+  border-radius: 10px;
+  border: 1.6px solid black;
+}
+
+.deleteModalBody {
+  text-align: center;
+}
+
+.filePosition {
+  top: 110px;
+}
+
+.captionLeft {
+  margin: 0.2rem 0.3rem 0.2rem 0;
+  padding: 0.3rem;
+  display: inline;
+  color: #cbbcb1;
+}
+
+.selectYourFileText {
+  color: #007791;
+  font-size: 1.2rem;
+  outline: none;
+}
+
+.selectYourFileText:hover {
+  color: black;
+}
+
+.progress {
+  height: 9px;
+  margin-top: 15px;
+  margin-bottom: 4px;
+}
+
+/* Bootstrap */
+
+.form-control {
+  /* for textarea */
+  display: inline-block;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  border: 2px solid gray;
+}
+
+.modal-body {
+  display: inline-block;
+}
+
+.modal {
+  top: 15%;
+}
+
+.card-img {
+  height: 12rem;
+  border: 1px solid black;
+}
+
+.card {
+  border: 1px solid black;
+  background-color: #fffdf9;
+}
+
+.modal-dialog {
+  width: 28%;
+}
+
+.modal-content {
+  width: 90%;
+  border: 4.6px dashed black;
+  border-radius: 33px;
+}
+
+.row {
+  margin-bottom: 50px;
+}
+
+@media (max-width: 1120px) {
+  body {
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url("../images/p1.jpg");
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+
+  #startPageTop {
+    padding: 15px;
+    font-size: 3.3rem;
+  }
+
+  #startPageHeading {
+    font-size: 3.5rem;
+    padding: 15% 20% 35px 20%;
+  }
+
+  #getStartedLink {
+    font-size: 2rem;
+  }
+
+  .mainHeader {
+    font-size: 65px;
+  }
+}
+
+@media (max-width: 1020px) {
+  .mainHeader {
+    font-size: 60px;
+  }
+
+  .fileUpload {
+    width: 14.5rem;
+    height: 19rem;
+    margin-left: 0;
+    margin-bottom: 70px;
+    left: 65px;
+  }
+
+  .card-img {
+    height: 10rem;
+  }
+
+  .modal-dialog {
+    width: 45%;
+    margin-left: auto;
+  }
+
+  .card-body {
+    padding-top: 0.85rem;
+  }
+
+  .addMemoryButton {
+    font-size: 5rem;
+  }
+
+  .memoryLine {
+    font-size: 2.2rem;
+  }
+
+  #butoon {
+    font-size: 2.1rem;
+  }
+}
+
+@media (max-width: 910px) {
+  body {
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url("../images/p1.jpg");
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+
+  #startPageTop {
+    font-size: 3rem;
+  }
+
+  #startPageHeading {
+    font-size: 3rem;
+    padding: 15% 15% 35px 15%;
+  }
+
+  #getStartedLink {
+    font-size: 1.7rem;
+  }
+
+  .mainHeader {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 590px) {
+  body {
+    background: linear-gradient(
+        rgba(255, 255, 255, 0.5),
+        rgba(255, 255, 255, 0.5)
+      ),
+      url("../images/p4.jpg");
+    -webkit-background-size: cover;
+    background-size: cover;
+  }
+
+  .mainHeader {
+    font-size: 47px;
+  }
+
+  .fileUpload {
+    width: 12.2rem;
+    height: 15.5rem;
+    margin-left: 0;
+    margin-bottom: 60px;
+    left: 45px;
+  }
+
+  .card-img {
+    height: 8rem;
+    border: 1px solid black;
+  }
+
+  .modal-dialog {
+    width: 82%;
+    margin-left: auto;
+  }
+
+  .card-text {
+    font-size: 0.87rem;
+  }
+
+  .card-body {
+    padding-top: 0.6rem;
+  }
+
+  .addMemoryButton {
+    font-size: 4rem;
+  }
+
+  .memoryLine {
+    font-size: 2rem;
+  }
+
+  .MuiSvgIcon-root {
+    font-size: 1.7rem;
+  }
+
+  #butoon {
+    font-size: 1.85rem;
+  }
+}
