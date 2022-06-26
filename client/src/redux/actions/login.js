@@ -8,6 +8,25 @@ import {
   AUTH_ERROR,
 } from "../common/types";
 
+export const register = (email, password) => async (dispatch) => {
+  try {
+    console.log(email, password);
+    const response = await axios.post("/api/v1/auth/register", {
+      email: email,
+      password: password,
+    });
+    console.log(response);
+    dispatch({
+      type: LOGIN_SUCCESS,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: LOGIN_FAIL,
+    });
+  }
+};
+
 export const login = (email, password) => async (dispatch) => {
   try {
     console.log(email, password);
@@ -27,12 +46,21 @@ export const login = (email, password) => async (dispatch) => {
   }
 };
 
-export const loadUser = (token) => async (dispatch) => {
+export const loadUser = (token, userId) => async (dispatch) => {
   try {
     if (token) {
+      const response = await axios.get("/api/v1/user", {
+        params: {
+          token: token,
+          userId: userId,
+        },
+      });
       dispatch({
         type: USER_LOADED,
-        payload: null,
+        payload: {
+          token: token,
+          data: response.data,
+        },
       });
     } else {
       dispatch({

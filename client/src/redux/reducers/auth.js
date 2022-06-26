@@ -7,7 +7,7 @@ import {
 } from "../common/types";
 
 const initialState = {
-  //   token: localStorage.getItem("token"),
+  token: localStorage.getItem("token"),
   isAuthenticated: false,
   user: null,
 };
@@ -16,16 +16,19 @@ const auth = (state = initialState, action) => {
   const { type, payload } = action;
   switch (type) {
     case LOGIN_SUCCESS:
-      //   localStorage.setItem("token", payload.token);
+      localStorage.setItem("token", payload.token);
+      localStorage.setItem("id", payload.user.id);
       return {
         ...state,
+        token: payload.token,
         isAuthenticated: true,
-        user: payload.user,
+        user: payload.user.gallery,
       };
     case LOGIN_FAIL:
     case LOGOUT:
     case AUTH_ERROR:
-      //  localStorage.removeItem("token");
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
       return {
         ...state,
         token: null,
@@ -36,7 +39,8 @@ const auth = (state = initialState, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        user: payload,
+        token: payload.token,
+        user: payload.data.data,
       };
     default:
       return state;

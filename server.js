@@ -57,10 +57,19 @@ const signedUserJwt = async (userId) => {
   });
 };
 
-app.post("/api/v1/auth", async (req, res) => {
-  console.log(req.body);
+app.get("/api/v1/user", async (req, res) => {
+  const { userId, token } = req.query;
+  console.log(userId, token);
+  const user = await User.findOne({ _id: userId });
+  console.log(user);
+  return res.status(200).json({
+    token: token,
+    data: user.gallery,
+  });
+});
+
+app.post("/api/v1/auth/register", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   const user = await User.findOne({ email: email });
   if (user) {
     return res.status(400).json({
@@ -74,6 +83,10 @@ app.post("/api/v1/auth", async (req, res) => {
     await newUser.save();
     return res.status(200).json({
       success: "Successful SignUp",
+      user: {
+        gallery: newUser.gallery,
+        id: newUser._id,
+      },
       token: await signedUserJwt(newUser._id),
     });
   }
@@ -81,7 +94,6 @@ app.post("/api/v1/auth", async (req, res) => {
 
 app.post("/api/v1/auth/login", async (req, res) => {
   const { email, password } = req.body;
-  console.log(email, password);
   const user = await User.findOne({ email: email });
   if (!user) {
     return res.status(400).json({
@@ -90,14 +102,16 @@ app.post("/api/v1/auth/login", async (req, res) => {
   } else {
     const isMatch = await compareEncrypted(password, user.password);
     if (!isMatch) {
-      console.log("2");
       return res.status(400).json({
         error: "Incorrect Information",
       });
     } else {
-      console.log("3");
       return res.status(200).json({
         success: "Successful Login",
+        user: {
+          gallery: user.gallery,
+          id: user._id,
+        },
         token: await signedUserJwt(user._id),
       });
     }

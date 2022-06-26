@@ -8,7 +8,13 @@ import { loadUser } from "../redux/actions/login";
 
 const App = () => {
   useEffect(() => {
-    store.dispatch(loadUser(null));
+    if (localStorage.getItem("token")) {
+      const token = localStorage.getItem("token");
+      const id = localStorage.getItem("id");
+      store.dispatch(loadUser(token, id));
+    } else {
+      store.dispatch(loadUser(null, null));
+    }
   }, []);
 
   return (

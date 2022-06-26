@@ -1,29 +1,24 @@
 import axios from "axios";
 import { React, useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, Redirect } from "react-router-dom";
 import Error from "./Error";
+import { register } from "../../redux/actions/login";
 
-const Register = (props) => {
+const Register = () => {
+  const isAuthenticated = useSelector((state) => state.isAuthenticated);
+  const dispatch = useDispatch();
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [errorMessage, setErrorMessage] = useState("");
 
-  // if (auth) {
-  //   return <Redirect to="/home" />;
-  // }
+  if (isAuthenticated) {
+    return <Redirect to="/home" />;
+  }
 
   const handleLogin = async (event) => {
     event.preventDefault();
-    const response = await axios.post("/api/v1/auth", {
-      email: email,
-      password: password,
-    });
-    if (response.data.status == true) {
-      setErrorMessage(response.data.success);
-      return <Redirect to="/home" />;
-    } else {
-      setErrorMessage(response.data.error);
-    }
+    dispatch(register(email, password));
   };
 
   return (

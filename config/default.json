@@ -1,3 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost/UsersDB"
+  "mongoURI": "mongodb://localhost/UsersDB",
+  "jwtToken": "secretKeyToJWT"
 }
