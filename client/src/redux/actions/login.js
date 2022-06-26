@@ -29,12 +29,10 @@ export const register = (email, password) => async (dispatch) => {
 
 export const login = (email, password) => async (dispatch) => {
   try {
-    console.log(email, password);
     const response = await axios.post("/api/v1/auth/login", {
       email: email,
       password: password,
     });
-    console.log(response);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,

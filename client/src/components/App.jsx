@@ -1,10 +1,13 @@
 import React, { useEffect } from "react";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-import PublicRoutes from "./routing/PublicRoutes";
-import Routes from "./routing/Routes";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../redux/actions/login";
+import PrivateRoute from "./routing/PrivateRoute";
+import FileUpload from "./FileUpload";
+import StartPage from "./StartPage";
+import Login from "./Login/Login";
+import Register from "./Login/Register";
 
 const App = () => {
   useEffect(() => {
@@ -19,16 +22,14 @@ const App = () => {
 
   return (
     <Provider store={store}>
-      <BrowserRouter>
+      <Router>
         <Switch>
-          <Route
-            exact
-            path={["/", "/login", "/register", "/home"]}
-            component={PublicRoutes}
-          />
-          <Route exact path={["/home"]} component={Routes} />
+          <Route exact path="/" component={StartPage} />
+          <Route exact path="/login" component={Login} />
+          <Route exact path="/register" component={Register} />
+          <PrivateRoute exact path="/home" component={FileUpload} />
         </Switch>
-      </BrowserRouter>
+      </Router>
     </Provider>
   );
 };

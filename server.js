@@ -28,11 +28,6 @@ connectDB();
 //   }
 // );
 
-// mongoose.connect("mongodb://localhost:27017/PhotoDB", {
-//   useNewUrlParser: true,
-//   useUnifiedTopology: true,
-// });
-
 const userSchema = new mongoose.Schema(
   {
     email: String,
@@ -59,9 +54,7 @@ const signedUserJwt = async (userId) => {
 
 app.get("/api/v1/user", async (req, res) => {
   const { userId, token } = req.query;
-  console.log(userId, token);
   const user = await User.findOne({ _id: userId });
-  console.log(user);
   return res.status(200).json({
     token: token,
     data: user.gallery,
