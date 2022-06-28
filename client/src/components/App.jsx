@@ -4,7 +4,7 @@ import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../redux/actions/login";
 import PrivateRoute from "./routing/PrivateRoute";
-import FileUpload from "./FileUpload";
+import FileUpload from "./Home";
 import StartPage from "./StartPage";
 import Login from "./Login/Login";
 import Register from "./Login/Register";

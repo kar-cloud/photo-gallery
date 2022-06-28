@@ -1,18 +1,20 @@
 import React, { Fragment, useState, useEffect } from "react";
+import { useSelector } from "react-redux";
 import axios from "axios";
 import InputForm from "./InputForm";
+import Message from "./Message";
+import InputModal from "./modals/InputModal";
+import UpdateIcon from "@material-ui/icons/Update";
+import DeleteIcon from "@material-ui/icons/Delete";
 
 function FileUpload() {
+  const photos = useSelector((state) => state.user);
+
   const [file, setFile] = useState();
-  // to save the current file that user choosed choosed
   const [fileName, setFileName] = useState("Select your File");
-  // to save the current file choosed name
   const [fileCaption, setFileCaption] = useState("A Beautiful Memory");
-  // to save the caption of the choosed file
   const [captions, setCaptions] = useState([]);
-  // array to store all the captions in accordance with file chosen
   const [imageFiles, setImageFiles] = useState([]);
-  // arrys to store the files being uploaded
   const [message, setMessage] = useState("");
   // just a message if file is uploaded properly or not
   const [uploadPercentage, setUploadPercentage] = useState();
@@ -172,8 +174,87 @@ function FileUpload() {
   };
 
   return (
-    <Fragment>
-      <InputForm
+    <div>
+      <h1 className="mainHeader">Your Photo Gallery</h1>
+      <hr className="hrHome" />
+      <InputModal />
+      <div className="row">
+        <div
+          className="card fileUpload"
+          style={{
+            marginTop: "30px",
+            border: "3.5px dashed lightgray",
+            backgroundColor: "white",
+          }}
+        >
+          <div className="card-body">
+            <button
+              className="addMemoryButton"
+              type="button"
+              data-toggle="modal"
+              data-target="#basicModal"
+              // onClick={props.uploadPercent} //making upload percentage to 0
+            >
+              +
+            </button>
+            <p className="memoryLine">Add any Memory</p>
+          </div>
+        </div>
+        {photos
+          ? photos.map((image, index) => {
+              return (
+                <div>
+                  <div
+                    className="upAndDel"
+                    // onMouseOver={() => {
+                    //   handleHoverOver(index);
+                    // }}
+                    // onMouseOut={() => {
+                    //   handleHoverOut(index);
+                    // }}
+                  >
+                    <div className="fileUpload card cardDisplay actualUpAndDel">
+                      {/* <a href={image.imageURL}>
+                        <img className="card-img" src={image.imageURL} alt="" />
+                      </a> */}
+                      <div className="card-body">
+                        {/* <p className="card-text">{image.caption}</p> */}
+                      </div>
+                      <button
+                        type="button"
+                        className={index}
+                        id="updateButton"
+                        // onClick={() => {
+                        //   handleUpdateID(index);
+                        // }}
+                        data-toggle="modal"
+                        data-target="#basicModal"
+                      >
+                        <UpdateIcon id="butoon" />
+                      </button>
+                      <button
+                        type="button"
+                        id="deleteButton"
+                        className={index + "a"}
+                        value={index}
+                        // onClick={() => {
+                        //   handleDeleteID(index);
+                        // }}
+                        data-toggle="modal"
+                        data-target="#exampleModal"
+                      >
+                        <DeleteIcon id="butoon" />
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              );
+            })
+          : null}
+      </div>
+      {/* <Message message={props.message} /> */}
+
+      {/* <InputForm
         handleChangeFile={handleChangeFile}
         handleChangeCaption={handleChangeCaption}
         fileName={fileName}
@@ -191,8 +272,8 @@ function FileUpload() {
         buttonValue={buttonValue}
         handleButtonValue={handleButtonValue}
         handleUpdatedDragFile={handleUpdatedDragFile}
-      />
-    </Fragment>
+      /> */}
+    </div>
   );
 }
 
