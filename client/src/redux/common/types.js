@@ -3,3 +3,7 @@ export const LOGIN_FAIL = "LOGIN_FAIL";
 export const LOGOUT = "LOGOUT";
 export const USER_LOADED = "USER_LOADED";
 export const AUTH_ERROR = "AUTH_ERROR";
+export const ADD_PHOTO = "ADD_PHOTO";
+export const UPDATE_PHOTO = "UPDATE_PHOTO";
+export const DELETE_PHOTO = "DELETE_PHOTO";
+export const PHOTO_ERROR = "PHOTO_ERROR";

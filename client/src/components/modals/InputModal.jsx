@@ -2,18 +2,30 @@ import React, { useState } from "react";
 import Caption from "../Caption";
 import ProgressBar from "../ProgressBar";
 import Dropzone from "../Dropzone";
+import { useDispatch } from "react-redux";
+import { addToGallery } from "../../redux/actions/photos";
 
 const InputModal = (props) => {
+  const dispatch = useDispatch();
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
   const [caption, setCaption] = useState("A Beautiful Memory");
-  const [uploadPercentage, setUploadPercentage] = useState(0);
+
+  const userId = localStorage.getItem("id");
 
   function handleInputFile(event) {
     setFileName(event.target.files[0].name);
     setFile(event.target.files[0]);
-    //     setUpdatedFile(event.target.files[0]);
   }
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    const data = new FormData();
+    data.append(`image`, file);
+    data.append("id", userId);
+    data.append("caption", caption);
+    dispatch(addToGallery(data));
+  };
 
   return (
     <div
@@ -27,48 +39,52 @@ const InputModal = (props) => {
       <div className="modal-dialog " role="document">
         <div className="modal-content">
           <div className="modal-body modalBodyUpdate">
-            <div>
-              <input
-                id="inputUpload"
-                type="file"
-                style={{ display: "none" }}
-                onChange={handleInputFile}
-                accept="image/png, image/jpeg ,image/jpg"
-              />
-              {!fileName ? (
-                <Dropzone setFileName={setFileName} setFile={setFile} />
-              ) : null}
-              <label
-                htmlFor="inputUpload"
-                style={{
-                  cursor: "pointer",
-                  fontSize: "inherit",
-                }}
-              >
-                <span className="selectYourFileText">
-                  {fileName ? fileName : "Select Your File"}
-                </span>
-              </label>
-              <button
-                type="button"
-                className="close closeButton"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-            <Caption setCaption={setCaption} />
-            {uploadPercentage ? <ProgressBar /> : null}
-            <button
-              type="button"
-              className="btn btn-info updateAndUploadModalButton"
-              // onClick={props.handleSubmit}
-              aria-label="Upload"
+            <form
+              enctype="multipart/form-data"
+              onSubmit={(event) => handleSubmit(event)}
             >
-              Upload
-            </button>
-
+              <div>
+                <input
+                  id="inputUpload"
+                  type="file"
+                  name="image"
+                  style={{ display: "none" }}
+                  onChange={handleInputFile}
+                  accept="image/png, image/jpeg ,image/jpg"
+                />
+                {!fileName ? (
+                  <Dropzone setFileName={setFileName} setFile={setFile} />
+                ) : null}
+                <label
+                  htmlFor="inputUpload"
+                  name="image"
+                  style={{
+                    cursor: "pointer",
+                    fontSize: "inherit",
+                  }}
+                >
+                  <span className="selectYourFileText">
+                    {fileName ? fileName : "Select Your File"}
+                  </span>
+                </label>
+                <button
+                  type="button"
+                  className="close closeButton"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
+              </div>
+              <Caption setCaption={setCaption} />
+              <button
+                type="submit"
+                className="btn btn-info updateAndUploadModalButton"
+                aria-label="Upload"
+              >
+                Upload
+              </button>
+            </form>
             {/* {props.buttonValue === "updateButton" ? (
               <div>
                 <input

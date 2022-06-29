@@ -2,7 +2,12 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
+
 const fileUpload = require("express-fileupload");
+const multer = require("multer");
+const uuid = require("uuid").v4;
+
 const path = require("path");
 const connectDB = require("./config/db");
 const { hashAndSalt, compareEncrypted } = require("./utils/encrypt.util");
@@ -16,7 +21,8 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-app.use(fileUpload());
+// app.use(fileUpload());
+// app.use(cors());
 app.use(express.static(path.join(__dirname, "build")));
 connectDB();
 
@@ -30,12 +36,20 @@ connectDB();
 
 const userSchema = new mongoose.Schema(
   {
-    email: String,
-    password: String,
+    email: {
+      type: String,
+    },
+    password: {
+      type: String,
+    },
     gallery: [
       {
-        imageUrl: String,
-        caption: String,
+        imageUrl: {
+          type: String,
+        },
+        caption: {
+          type: String,
+        },
       },
     ],
   },
@@ -43,6 +57,20 @@ const userSchema = new mongoose.Schema(
 );
 
 const User = new mongoose.model("User", userSchema);
+
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, "client/public");
+  },
+  filename: (req, file, cb) => {
+    const extension = path.extname(file.originalname);
+    const id = uuid();
+    const filePath = `uploads/${id}${extension}`;
+    cb(null, filePath);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 const signedUserJwt = async (userId) => {
   return signedJWT({
@@ -53,11 +81,10 @@ const signedUserJwt = async (userId) => {
 };
 
 app.get("/api/v1/user", async (req, res) => {
-  const { userId, token } = req.query;
+  const { userId } = req.query;
   const user = await User.findOne({ _id: userId });
   return res.status(200).json({
-    token: token,
-    data: user.gallery,
+    gallery: user.gallery,
   });
 });
 
@@ -109,6 +136,24 @@ app.post("/api/v1/auth/login", async (req, res) => {
       });
     }
   }
+});
+
+app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
+  const { id, caption } = req.body;
+  const { filename } = req.file;
+  const user = await User.findOne({ _id: id });
+  const image = {
+    imageUrl: filename,
+    caption: caption,
+  };
+  let gallery = user.gallery;
+  gallery.push(image);
+  user.gallery = gallery;
+  user.save();
+  res.status(200).json({
+    success: "Photo added successfully",
+    gallery: user.gallery,
+  });
 });
 
 // const photoSchema = new mongoose.Schema({

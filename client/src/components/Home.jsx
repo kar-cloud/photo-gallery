@@ -214,13 +214,21 @@ function FileUpload() {
                     // }}
                   >
                     <div className="fileUpload card cardDisplay actualUpAndDel">
-                      {/* <a href={image.imageURL}>
-                        <img className="card-img" src={image.imageURL} alt="" />
-                      </a> */}
+                      <a
+                        href={image.imageUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        <img
+                          className="card-img"
+                          src={image.imageUrl}
+                          alt="Error"
+                        />
+                      </a>
                       <div className="card-body">
-                        {/* <p className="card-text">{image.caption}</p> */}
+                        <p className="card-text">{image.caption}</p>
                       </div>
-                      <button
+                      {/* <button
                         type="button"
                         className={index}
                         id="updateButton"
@@ -244,7 +252,7 @@ function FileUpload() {
                         data-target="#exampleModal"
                       >
                         <DeleteIcon id="butoon" />
-                      </button>
+                      </button> */}
                     </div>
                   </div>
                 </div>

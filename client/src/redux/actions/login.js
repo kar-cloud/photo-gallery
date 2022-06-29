@@ -10,12 +10,10 @@ import {
 
 export const register = (email, password) => async (dispatch) => {
   try {
-    console.log(email, password);
     const response = await axios.post("/api/v1/auth/register", {
       email: email,
       password: password,
     });
-    console.log(response);
     dispatch({
       type: LOGIN_SUCCESS,
       payload: response.data,
@@ -46,6 +44,7 @@ export const login = (email, password) => async (dispatch) => {
 
 export const loadUser = (token, userId) => async (dispatch) => {
   try {
+    console.log({ token, userId });
     if (token) {
       const response = await axios.get("/api/v1/user", {
         params: {
@@ -55,21 +54,20 @@ export const loadUser = (token, userId) => async (dispatch) => {
       });
       dispatch({
         type: USER_LOADED,
-        payload: {
-          token: token,
-          data: response.data,
-        },
+        payload: response.data,
       });
     } else {
-      dispatch({
-        type: AUTH_ERROR,
-        payload: null,
-      });
+      console.log("Error");
+      // dispatch({
+      //   type: AUTH_ERROR,
+      //   payload: null,
+      // });
     }
   } catch (err) {
-    dispatch({
-      type: AUTH_ERROR,
-      payload: null,
-    });
+    console.log("erorrr here", err);
+    // dispatch({
+    //   type: AUTH_ERROR,
+    //   payload: null,
+    // });
   }
 };

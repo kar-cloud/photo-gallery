@@ -4,6 +4,10 @@ import {
   LOGOUT,
   USER_LOADED,
   AUTH_ERROR,
+  ADD_PHOTO,
+  UPDATE_PHOTO,
+  DELETE_PHOTO,
+  PHOTO_ERROR,
 } from "../common/types";
 
 const initialState = {
@@ -27,8 +31,8 @@ const auth = (state = initialState, action) => {
     case LOGIN_FAIL:
     case LOGOUT:
     case AUTH_ERROR:
-      localStorage.removeItem("token");
-      localStorage.removeItem("id");
+      // localStorage.removeItem("token");
+      // localStorage.removeItem("id");
       return {
         ...state,
         token: null,
@@ -36,11 +40,17 @@ const auth = (state = initialState, action) => {
         user: null,
       };
     case USER_LOADED:
+      // localStorage.setItem("token",token);
       return {
         ...state,
         isAuthenticated: true,
-        token: payload.token,
-        user: payload.data.data,
+        token: localStorage.getItem("token"),
+        user: payload.gallery,
+      };
+    case ADD_PHOTO:
+      return {
+        ...state,
+        user: payload.gallery,
       };
     default:
       return state;

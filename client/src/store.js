@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import thunk from "redux-thunk";
-import auth from "./redux/reducers/auth";
+import auth from "./redux/reducers/state";
 import { composeWithDevTools } from "redux-devtools-extension";
 
 const initialState = {};
