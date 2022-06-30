@@ -23,34 +23,6 @@ function InputForm(props) {
     props.handleButtonValue();
   }
 
-  function handleHoverOver(index) {
-    window.$(`.${index}`).css({
-      transition: "0.7s",
-      margin: "0 0 16% 18%",
-      top: "110%",
-    });
-
-    window.$(`.${index + "a"}`).css({
-      transition: "0.7s",
-      margin: "0 0 16% 58%",
-      top: "110%",
-    });
-  }
-
-  function handleHoverOut(index) {
-    window.$(`.${index}`).css({
-      transition: "1.8s",
-      marginLeft: "32%",
-      top: "10%",
-    });
-
-    window.$(`.${index + "a"}`).css({
-      transition: "1.8s",
-      marginLeft: "40%",
-      top: "10%",
-    });
-  }
-
   //this code will check if span button is clicked it will close the modal
   window.$("#modalClose").click(function () {
     window.$("#basicModal").modal("hide");

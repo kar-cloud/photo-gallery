@@ -52,6 +52,16 @@ const auth = (state = initialState, action) => {
         ...state,
         user: payload.gallery,
       };
+    case UPDATE_PHOTO:
+      return {
+        ...state,
+        user:
+          state.user !== null
+            ? state.user.map((image) =>
+                image._id == payload.update._id ? payload.update : image
+              )
+            : state.user,
+      };
     default:
       return state;
   }

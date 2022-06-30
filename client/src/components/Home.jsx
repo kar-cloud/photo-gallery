@@ -27,157 +27,190 @@ function FileUpload() {
   // to get the caption after updation
   const [updatedFile, setUpdatedFile] = useState();
   // to get the updated file
-  const [buttonValue, setButtonValue] = useState("");
+  const [editMode, setEditMode] = useState({
+    mode: false,
+    fileName: "",
+    caption: "",
+    imageId: "",
+  });
   // to check if update button is pressed or not
 
-  if (buttonValue !== "updateButton") {
-    window.$("#basicModal").on("hidden.bs.modal", function () {
-      setFileName("Select your File");
-      setFile();
-      setFileCaption("A Beautiful Memory");
-      setCaptionLeft(60);
-      document.getElementById("text-form").reset();
+  // if (buttonValue !== "updateButton") {
+  //   window.$("#basicModal").on("hidden.bs.modal", function () {
+  //     setFileName("Select your File");
+  //     setFile();
+  //     setFileCaption("A Beautiful Memory");
+  //     setCaptionLeft(60);
+  //     document.getElementById("text-form").reset();
+  //   });
+  // }
+
+  // useEffect(() => {
+  //   getPhotos();
+  // }, []);
+
+  // function handleButtonValue() {
+  //   setButtonValue("updateButton");
+  // }
+
+  // function handleChangeFile(event) {
+  //   setFileName(event.target.files[0].name);
+  //   setFile(event.target.files[0]);
+  //   setUpdatedFile(event.target.files[0]);
+  // }
+
+  // function handleDrag(fileDrag) {
+  //   setFileName(fileDrag.name);
+  //   setFile(fileDrag);
+  // }
+
+  // function handleChangeCaption(event) {
+  //   setFileCaption(event.target.value);
+  //   setUpdatedCaption(event.target.value);
+  //   setCaptionLeft(60 - event.target.value.length);
+  // }
+
+  // function uploadPercent() {
+  //   setButtonValue();
+  //   setUploadPercentage(0);
+  // }
+
+  // function handleFade() {
+  //   window.$("#message").fadeIn(0); //message id is from message.jsx
+  //   setTimeout(function () {
+  //     window.$("#message").fadeOut(500);
+  //   }, 2000);
+  // }
+
+  // function handleUpdatedDragFile(fileDrag) {
+  //   setFileName(fileDrag.name);
+  //   setFile(fileDrag);
+  //   setUpdatedFile(fileDrag);
+  // }
+
+  // const getPhotos = () => {
+  //   axios
+  //     .get("/api")
+  //     .then((response) => {
+  //       const data = response.data;
+  //       setPosts([...data]);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
+
+  // const handleDeletePost = async (id) => {
+  //   const formData = new FormData();
+  //   formData.append("id", id);
+  //   try {
+  //     axios.post("/delete", formData);
+  //     window.location.reload();
+  //   } catch (err) {
+  //     console.error(err);
+  //   }
+  // };
+
+  // const handleUpdate = async (id, index) => {
+  //   const formData = new FormData();
+  //   formData.append("updatedCaption", updatedCaption);
+  //   formData.append("id", id);
+  //   formData.append("updatedFile", updatedFile);
+  //   formData.append("ifCaptionUndefined", posts[index].caption);
+  //   try {
+  //     axios.post("/update", formData);
+  //     setTimeout(function () {
+  //       window.location.reload();
+  //     }, 1000);
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // };
+
+  // const handleSubmit = async (event) => {
+  //   const formData = new FormData();
+  //   // whenever we need to pass data from react to server we use formData
+  //   // console.log(formData);
+  //   // FormData is a special type of object which is not stringifyable
+  //   // can cannot just be printed out using console.log
+  //   formData.append("file", file);
+  //   formData.append("fileCaption", fileCaption);
+
+  //   try {
+  //     // axios is used to pass HTTP request to server
+  //     // and getting reponse from it
+  //     const res = await axios.post("/upload", formData, {
+  //       onUploadProgress: (progressEvent) => {
+  //         setUploadPercentage(
+  //           parseInt(
+  //             Math.round(progressEvent.loaded * 100) / progressEvent.total
+  //           )
+  //         );
+  //       },
+  //     });
+  //     const { fileName, filePath } = res.data;
+  //     setImageFiles((prevImageFile) => {
+  //       return [...prevImageFile, { fileName, filePath }];
+  //     });
+  //     setCaptions((prevCaption) => {
+  //       return [...prevCaption, fileCaption];
+  //     });
+  //     setMessage("File uploaded");
+  //     setFileName("Select your File");
+  //     setFile();
+  //     setFileCaption("A Beautiful Memory");
+  //     setCaptionLeft(60);
+  //     handleFade();
+  //     setTimeout(function () {
+  //       window.location.reload();
+  //     }, 0);
+  //     document.getElementById("text-form").reset();
+  //   } catch (err) {
+  //     if (err.response.status === 500) {
+  //       setMessage(err.response.data.msg500);
+  //       handleFade();
+  //       setUploadPercentage(0);
+  //     } else {
+  //       setMessage(err.response.data.msg);
+  //       handleFade();
+  //       setUploadPercentage(0);
+  //     }
+  //   }
+  // };
+
+  function handleHoverOver(index) {
+    window.$(`.${index}`).css({
+      transition: "0.7s",
+      margin: "0 0 16% 18%",
+      top: "110%",
+    });
+
+    window.$(`.${index + "a"}`).css({
+      transition: "0.7s",
+      margin: "0 0 16% 58%",
+      top: "110%",
     });
   }
 
-  useEffect(() => {
-    getPhotos();
-  }, []);
+  function handleHoverOut(index) {
+    window.$(`.${index}`).css({
+      transition: "1.8s",
+      marginLeft: "32%",
+      top: "10%",
+    });
 
-  function handleButtonValue() {
-    setButtonValue("updateButton");
+    window.$(`.${index + "a"}`).css({
+      transition: "1.8s",
+      marginLeft: "40%",
+      top: "10%",
+    });
   }
-
-  function handleChangeFile(event) {
-    setFileName(event.target.files[0].name);
-    setFile(event.target.files[0]);
-    setUpdatedFile(event.target.files[0]);
-  }
-
-  function handleDrag(fileDrag) {
-    setFileName(fileDrag.name);
-    setFile(fileDrag);
-  }
-
-  function handleChangeCaption(event) {
-    setFileCaption(event.target.value);
-    setUpdatedCaption(event.target.value);
-    setCaptionLeft(60 - event.target.value.length);
-  }
-
-  function uploadPercent() {
-    setButtonValue();
-    setUploadPercentage(0);
-  }
-
-  function handleFade() {
-    window.$("#message").fadeIn(0); //message id is from message.jsx
-    setTimeout(function () {
-      window.$("#message").fadeOut(500);
-    }, 2000);
-  }
-
-  function handleUpdatedDragFile(fileDrag) {
-    setFileName(fileDrag.name);
-    setFile(fileDrag);
-    setUpdatedFile(fileDrag);
-  }
-
-  const getPhotos = () => {
-    axios
-      .get("/api")
-      .then((response) => {
-        const data = response.data;
-        setPosts([...data]);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
-
-  const handleDeletePost = async (id) => {
-    const formData = new FormData();
-    formData.append("id", id);
-    try {
-      axios.post("/delete", formData);
-      window.location.reload();
-    } catch (err) {
-      console.error(err);
-    }
-  };
-
-  const handleUpdate = async (id, index) => {
-    const formData = new FormData();
-    formData.append("updatedCaption", updatedCaption);
-    formData.append("id", id);
-    formData.append("updatedFile", updatedFile);
-    formData.append("ifCaptionUndefined", posts[index].caption);
-    try {
-      axios.post("/update", formData);
-      setTimeout(function () {
-        window.location.reload();
-      }, 1000);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
-  const handleSubmit = async (event) => {
-    const formData = new FormData();
-    // whenever we need to pass data from react to server we use formData
-    // console.log(formData);
-    // FormData is a special type of object which is not stringifyable
-    // can cannot just be printed out using console.log
-    formData.append("file", file);
-    formData.append("fileCaption", fileCaption);
-
-    try {
-      // axios is used to pass HTTP request to server
-      // and getting reponse from it
-      const res = await axios.post("/upload", formData, {
-        onUploadProgress: (progressEvent) => {
-          setUploadPercentage(
-            parseInt(
-              Math.round(progressEvent.loaded * 100) / progressEvent.total
-            )
-          );
-        },
-      });
-      const { fileName, filePath } = res.data;
-      setImageFiles((prevImageFile) => {
-        return [...prevImageFile, { fileName, filePath }];
-      });
-      setCaptions((prevCaption) => {
-        return [...prevCaption, fileCaption];
-      });
-      setMessage("File uploaded");
-      setFileName("Select your File");
-      setFile();
-      setFileCaption("A Beautiful Memory");
-      setCaptionLeft(60);
-      handleFade();
-      setTimeout(function () {
-        window.location.reload();
-      }, 0);
-      document.getElementById("text-form").reset();
-    } catch (err) {
-      if (err.response.status === 500) {
-        setMessage(err.response.data.msg500);
-        handleFade();
-        setUploadPercentage(0);
-      } else {
-        setMessage(err.response.data.msg);
-        handleFade();
-        setUploadPercentage(0);
-      }
-    }
-  };
 
   return (
     <div>
       <h1 className="mainHeader">Your Photo Gallery</h1>
       <hr className="hrHome" />
-      <InputModal />
+      <InputModal editMode={editMode} />
       <div className="row">
         <div
           className="card fileUpload"
@@ -193,7 +226,15 @@ function FileUpload() {
               type="button"
               data-toggle="modal"
               data-target="#basicModal"
-              // onClick={props.uploadPercent} //making upload percentage to 0
+              onClick={() =>
+                setEditMode((state) => ({
+                  ...state,
+                  mode: false,
+                  fileName: "",
+                  caption: "",
+                  imageId: "",
+                }))
+              }
             >
               +
             </button>
@@ -206,12 +247,12 @@ function FileUpload() {
                 <div>
                   <div
                     className="upAndDel"
-                    // onMouseOver={() => {
-                    //   handleHoverOver(index);
-                    // }}
-                    // onMouseOut={() => {
-                    //   handleHoverOut(index);
-                    // }}
+                    onMouseOver={() => {
+                      handleHoverOver(index);
+                    }}
+                    onMouseOut={() => {
+                      handleHoverOut(index);
+                    }}
                   >
                     <div className="fileUpload card cardDisplay actualUpAndDel">
                       <a
@@ -228,13 +269,19 @@ function FileUpload() {
                       <div className="card-body">
                         <p className="card-text">{image.caption}</p>
                       </div>
-                      {/* <button
+                      <button
                         type="button"
                         className={index}
                         id="updateButton"
-                        // onClick={() => {
-                        //   handleUpdateID(index);
-                        // }}
+                        onClick={() => {
+                          setEditMode((state) => ({
+                            ...state,
+                            mode: true,
+                            fileName: image.fileName,
+                            caption: image.caption,
+                            imageId: image._id,
+                          }));
+                        }}
                         data-toggle="modal"
                         data-target="#basicModal"
                       >
@@ -252,7 +299,7 @@ function FileUpload() {
                         data-target="#exampleModal"
                       >
                         <DeleteIcon id="butoon" />
-                      </button> */}
+                      </button>
                     </div>
                   </div>
                 </div>

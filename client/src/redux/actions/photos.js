@@ -24,3 +24,24 @@ export const addToGallery = (data) => async (dispatch) => {
     });
   }
 };
+
+export const updateGallery = (data) => async (dispatch) => {
+  try {
+    // for (var pair of data.entries()) {
+    //   console.log(pair[0] + ", " + pair[1]);
+    // }
+    const response = await axios.post("/api/v1/update", data, {
+      headers: { "Content-Type": "multipart/form-data" },
+    });
+
+    dispatch({
+      type: UPDATE_PHOTO,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PHOTO_ERROR,
+      payload: null,
+    });
+  }
+};

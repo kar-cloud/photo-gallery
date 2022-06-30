@@ -1,22 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import Caption from "../Caption";
 import Dropzone from "../Dropzone";
 import { useDispatch } from "react-redux";
-import { addToGallery, updateGallery } from "../../redux/actions/photos";
+import { addToGallery } from "../../redux/actions/photos";
 
-const InputModal = (props) => {
-  let editMode = props.editMode;
+const UpdateModal = (props) => {
   const dispatch = useDispatch();
   const [file, setFile] = useState();
-  const [fileName, setFileName] = useState();
-  const [caption, setCaption] = useState("A Beautiful Memory");
-
-  useEffect(() => {
-    if (editMode) {
-      setFileName(editMode.fileName);
-      setCaption(editMode.caption);
-    }
-  }, [editMode]);
+  const fileId = props.fileId;
+  const [fileName, setFileName] = useState(props.fileName);
+  const [caption, setCaption] = useState(props.caption);
 
   const userId = localStorage.getItem("id");
 
@@ -28,48 +21,29 @@ const InputModal = (props) => {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData();
+    data.append(`image`, file);
     data.append("id", userId);
     data.append("caption", caption);
-    if (editMode) {
-      data.append("imageId", editMode.imageId);
-      if (file) data.append("image", file);
-      dispatch(updateGallery(data));
-    } else {
-      data.append("image", file);
-      dispatch(addToGallery(data));
-    }
+    dispatch(addToGallery(data));
   };
 
   return (
     <div
       className="modal fade"
-      id="basicModal"
+      id="updateModal"
       tabIndex="-1"
       role="dialog"
-      aria-labelledby="basicModal"
+      aria-labelledby="updateModal"
       aria-hidden="true"
     >
       <div className="modal-dialog " role="document">
         <div className="modal-content">
           <div className="modal-body modalBodyUpdate">
-            <div>
-              <h3 style={{ display: "inline-block", marginBottom: "20px" }}>
-                {editMode.mode ? "Update Memory" : "Add a Memory"}
-              </h3>
-              <button
-                type="button"
-                className="close closeButton"
-                data-dismiss="modal"
-                aria-label="Close"
-              >
-                <span aria-hidden="true">×</span>
-              </button>
-            </div>
-
             <form
               encType="multipart/form-data"
               onSubmit={(event) => handleSubmit(event)}
             >
+              <h1>Edit your Memory</h1>
               <div>
                 <input
                   id="inputUpload"
@@ -94,17 +68,24 @@ const InputModal = (props) => {
                     {fileName ? fileName : "Select Your File"}
                   </span>
                 </label>
+                <button
+                  type="button"
+                  className="close closeButton"
+                  data-dismiss="modal"
+                  aria-label="Close"
+                >
+                  <span aria-hidden="true">×</span>
+                </button>
               </div>
-              <Caption setCaption={setCaption} caption={caption} />
+              <Caption setCaption={setCaption} />
               <button
                 type="submit"
                 className="btn btn-info updateAndUploadModalButton"
                 aria-label="Upload"
               >
-                {editMode.mode ? "Update" : "Upload"}
+                Update
               </button>
             </form>
-
             {/* {props.buttonValue === "updateButton" ? (
               <div>
                 <input
@@ -235,4 +216,4 @@ const InputModal = (props) => {
   );
 };
 
-export default InputModal;
+export default UpdateModal;

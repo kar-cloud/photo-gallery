@@ -8,8 +8,19 @@ import FileUpload from "./Home";
 import StartPage from "./StartPage";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles(
+  {
+    root: {
+      fontSize: "2.5rem",
+    },
+  },
+  { name: "MuiSvgIcon" }
+);
 
 const App = () => {
+  const classes = useStyles();
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const token = localStorage.getItem("token");

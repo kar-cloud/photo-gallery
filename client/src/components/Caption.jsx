@@ -1,7 +1,16 @@
 import React, { useState } from "react";
+import { useEffect } from "react";
 
 const Caption = (props) => {
   const [captionLeft, setCaptionLeft] = useState(60);
+
+  useEffect(() => {
+    if (props.caption) {
+      setCaptionLeft(60 - props.caption.length);
+    } else {
+      setCaptionLeft(60);
+    }
+  }, [props.caption]);
 
   const handleChange = (event) => {
     props.setCaption(event.target.value);
@@ -17,7 +26,7 @@ const Caption = (props) => {
         id="messageText"
         maxLength="60"
         rows="3"
-        // defaultValue={props.posts[props.updateID].caption}
+        value={props.caption}
         onChange={handleChange}
         placeholder="A Beautiful Memory"
       ></textarea>
