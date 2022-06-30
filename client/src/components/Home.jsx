@@ -4,6 +4,7 @@ import axios from "axios";
 import InputForm from "./InputForm";
 import Message from "./Message";
 import InputModal from "./modals/InputModal";
+import DeleteModal from "./modals/DeleteModal";
 import UpdateIcon from "@material-ui/icons/Update";
 import DeleteIcon from "@material-ui/icons/Delete";
 
@@ -33,6 +34,11 @@ function FileUpload() {
     caption: "",
     imageId: "",
   });
+  const [deleteMode, setDeleteMode] = useState({
+    userId: "",
+    imageId: "",
+  });
+
   // to check if update button is pressed or not
 
   // if (buttonValue !== "updateButton") {
@@ -178,6 +184,21 @@ function FileUpload() {
   //   }
   // };
 
+  const changeModes = () => {
+    setEditMode((state) => ({
+      ...state,
+      mode: false,
+      fileName: "",
+      caption: "",
+      imageId: "",
+    }));
+    setDeleteMode((state) => ({
+      ...state,
+      imageId: "",
+      userId: "",
+    }));
+  };
+
   function handleHoverOver(index) {
     window.$(`.${index}`).css({
       transition: "0.7s",
@@ -211,6 +232,7 @@ function FileUpload() {
       <h1 className="mainHeader">Your Photo Gallery</h1>
       <hr className="hrHome" />
       <InputModal editMode={editMode} />
+      <DeleteModal deleteMode={deleteMode} />
       <div className="row">
         <div
           className="card fileUpload"
@@ -226,15 +248,7 @@ function FileUpload() {
               type="button"
               data-toggle="modal"
               data-target="#basicModal"
-              onClick={() =>
-                setEditMode((state) => ({
-                  ...state,
-                  mode: false,
-                  fileName: "",
-                  caption: "",
-                  imageId: "",
-                }))
-              }
+              onClick={changeModes}
             >
               +
             </button>
@@ -292,11 +306,15 @@ function FileUpload() {
                         id="deleteButton"
                         className={index + "a"}
                         value={index}
-                        // onClick={() => {
-                        //   handleDeleteID(index);
-                        // }}
+                        onClick={() => {
+                          setDeleteMode((state) => ({
+                            ...state,
+                            userId: localStorage.getItem("id"),
+                            imageId: image._id,
+                          }));
+                        }}
                         data-toggle="modal"
-                        data-target="#exampleModal"
+                        data-target="#deleteModal"
                       >
                         <DeleteIcon id="butoon" />
                       </button>

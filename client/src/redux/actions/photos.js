@@ -45,3 +45,24 @@ export const updateGallery = (data) => async (dispatch) => {
     });
   }
 };
+
+export const deleteFromGallery = (userId, imageId) => async (dispatch) => {
+  try {
+    console.log(userId, imageId);
+    const response = await axios.delete("/api/v1/delete", {
+      params: {
+        userId: userId,
+        imageId: imageId,
+      },
+    });
+    dispatch({
+      type: DELETE_PHOTO,
+      payload: response.data,
+    });
+  } catch (err) {
+    dispatch({
+      type: PHOTO_ERROR,
+      payload: null,
+    });
+  }
+};

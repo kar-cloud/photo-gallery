@@ -50,6 +50,9 @@ const userSchema = new mongoose.Schema(
         caption: {
           type: String,
         },
+        fileName: {
+          type: String,
+        },
       },
     ],
   },
@@ -140,11 +143,12 @@ app.post("/api/v1/auth/login", async (req, res) => {
 
 app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
   const { id, caption } = req.body;
-  const { filename } = req.file;
+  const { filename, originalname } = req.file;
   const user = await User.findOne({ _id: id });
   const image = {
     imageUrl: filename,
     caption: caption,
+    fileName: originalname,
   };
   let gallery = user.gallery;
   gallery.push(image);
@@ -153,6 +157,50 @@ app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
   res.status(200).json({
     success: "Photo added successfully",
     gallery: user.gallery,
+  });
+});
+
+app.post("/api/v1/update", upload.single("image"), async (req, res) => {
+  const { id, caption, imageId } = req.body;
+  let fileName = null,
+    filePath = null;
+  if (req.file) {
+    filePath = req.file.filename;
+    fileName = req.file.originalname;
+  }
+  const user = await User.findOne({ _id: id });
+  let image;
+  for (let i = 0; i < user.gallery.length; i++) {
+    if (user.gallery[i]._id == imageId) {
+      image = user.gallery[i];
+      image.caption = caption;
+      if (filePath) {
+        image.fileName = fileName;
+        image.imageUrl = filePath;
+      }
+    }
+  }
+  user.save();
+  return res.status(200).json({
+    update: image,
+  });
+});
+
+app.delete("/api/v1/delete", async (req, res) => {
+  console.log(req.query, req.body);
+  const { userId, imageId } = req.query;
+  const user = await User.findOne({ _id: userId });
+  let image;
+  for (let i = 0; i < user.gallery.length; i++) {
+    if (user.gallery[i]._id == imageId) {
+      image = user.gallery[i];
+      user.gallery.splice(i, 1);
+      break;
+    }
+  }
+  user.save();
+  return res.status(200).json({
+    deleted: image,
   });
 });
 

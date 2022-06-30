@@ -62,6 +62,14 @@ const auth = (state = initialState, action) => {
               )
             : state.user,
       };
+    case DELETE_PHOTO:
+      return {
+        ...state,
+        user:
+          state.user != null
+            ? state.user.filter((image) => image._id != payload.deleted._id)
+            : state.user,
+      };
     default:
       return state;
   }
