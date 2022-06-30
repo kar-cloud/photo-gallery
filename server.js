@@ -142,8 +142,12 @@ app.post("/api/v1/auth/login", async (req, res) => {
 });
 
 app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
-  const { id, caption } = req.body;
+  let { id, caption } = req.body;
+  if (caption == "") {
+    caption = "A Beautiful Memory";
+  }
   const { filename, originalname } = req.file;
+  console.log({ id, caption, filename, originalname });
   const user = await User.findOne({ _id: id });
   const image = {
     imageUrl: filename,

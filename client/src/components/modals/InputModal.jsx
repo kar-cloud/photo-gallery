@@ -6,6 +6,7 @@ import { addToGallery, updateGallery } from "../../redux/actions/photos";
 
 const InputModal = (props) => {
   let editMode = props.editMode;
+  console.log(editMode);
   const dispatch = useDispatch();
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
@@ -25,19 +26,27 @@ const InputModal = (props) => {
     setFile(event.target.files[0]);
   }
 
-  const handleSubmit = (event) => {
+  const handleSubmitUpload = (event) => {
+    console.log("HELLO");
     event.preventDefault();
     const data = new FormData();
     data.append("id", userId);
     data.append("caption", caption);
-    if (editMode) {
-      data.append("imageId", editMode.imageId);
-      if (file) data.append("image", file);
-      dispatch(updateGallery(data));
-    } else {
+    data.append("image", file);
+    dispatch(addToGallery(data));
+  };
+
+  const handleSubmitUpdate = (event) => {
+    console.log("HELLOE TPEJC");
+    event.preventDefault();
+    const data = new FormData();
+    data.append("id", userId);
+    data.append("caption", caption);
+    data.append("imageId", editMode.imageId);
+    if (file) {
       data.append("image", file);
-      dispatch(addToGallery(data));
     }
+    dispatch(updateGallery(data));
   };
 
   return (
@@ -68,7 +77,15 @@ const InputModal = (props) => {
 
             <form
               encType="multipart/form-data"
-              onSubmit={(event) => handleSubmit(event)}
+              onSubmit={
+                editMode.mode
+                  ? (event) => {
+                      handleSubmitUpdate(event);
+                    }
+                  : (event) => {
+                      handleSubmitUpload(event);
+                    }
+              }
             >
               <div>
                 <input

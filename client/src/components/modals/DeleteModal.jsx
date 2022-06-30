@@ -28,7 +28,7 @@ const DeleteModal = (props) => {
             </div>
             <button
               type="button"
-              class="btn btn-primary deleteAndCloseModalButton"
+              className="btn btn-primary deleteAndCloseModalButton"
               data-dismiss="modal"
             >
               Nope
