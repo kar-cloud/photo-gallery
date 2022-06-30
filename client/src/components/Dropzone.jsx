@@ -32,11 +32,7 @@ function Dropzone(props) {
     ) {
       <Message message={file.name} />;
     } else {
-      // if (props.buttonValue === "updateButton") {
-      //   props.handleUpdatedDragFile(file);
-      // } else {
       handleDragFile(file);
-      // }
     }
   });
 
@@ -45,11 +41,7 @@ function Dropzone(props) {
       style={{ display: "inline-block" }}
       {...getRootProps({ className: "dropzone" })}
     >
-      {/* {props.buttonValue === "updateButton" ? (
-        <p className="dropZone">{props.name}</p>
-      ) : ( */}
       <p className="dropZone barcode">{!isMobile ? "Drag here or " : null}</p>
-      {/* )} */}
     </div>
   );
 }
