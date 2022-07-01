@@ -1,7 +1,7 @@
 import React from "react";
 import Modal from "react-bootstrap/Modal";
 
-const Capture = (props) => {
+const WebCamModal = (props) => {
   const handleClose = () => {
     props.handleShow();
     props.handleFile();
@@ -44,4 +44,4 @@ const Capture = (props) => {
   );
 };
 
-export default Capture;
+export default WebCamModal;

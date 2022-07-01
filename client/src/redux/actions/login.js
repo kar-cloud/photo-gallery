@@ -57,17 +57,22 @@ export const loadUser = (token, userId) => async (dispatch) => {
         payload: response.data,
       });
     } else {
-      console.log("Error");
-      // dispatch({
-      //   type: AUTH_ERROR,
-      //   payload: null,
-      // });
+      dispatch({
+        type: AUTH_ERROR,
+        payload: null,
+      });
     }
   } catch (err) {
-    console.log("erorrr here", err);
-    // dispatch({
-    //   type: AUTH_ERROR,
-    //   payload: null,
-    // });
+    dispatch({
+      type: AUTH_ERROR,
+      payload: null,
+    });
   }
+};
+
+export const logout = () => async (dispatch) => {
+  dispatch({
+    type: LOGOUT,
+    payload: null,
+  });
 };

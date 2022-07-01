@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
-import Message from "./Message";
 
 function Dropzone(props) {
   function handleDragFile(fileDrag) {
@@ -26,12 +25,10 @@ function Dropzone(props) {
 
   acceptedFiles.map((file) => {
     if (
-      file.type !== imageType1 &&
-      file.type !== imageType2 &&
-      file.type !== imageType3
+      file.type == imageType1 ||
+      file.type == imageType2 ||
+      file.type == imageType3
     ) {
-      <Message message={file.name} />;
-    } else {
       handleDragFile(file);
     }
   });

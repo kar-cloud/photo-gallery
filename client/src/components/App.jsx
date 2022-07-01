@@ -11,6 +11,8 @@ import Register from "./Login/Register";
 import { makeStyles } from "@material-ui/core/styles";
 import WebCamModal from "./modals/WebCamModal";
 import Capture from "./Capture";
+import PublicRoutes from "./routing/PublicRoutes";
+import Routes from "./routing/Routes";
 
 const useStyles = makeStyles(
   {
@@ -37,11 +39,16 @@ const App = () => {
     <Provider store={store}>
       <Router>
         <Switch>
-          <Route exact path="/" component={StartPage} />
-          <Route exact path="/login" component={Login} />
-          <Route exact path="/register" component={Register} />
-          <Route exact path="/takePicture" component={Capture} />
-          <Route exact path="/home" component={FileUpload} />
+          <Route
+            exact
+            path={["/", "/login", "/register"]}
+            component={PublicRoutes}
+          />
+          <Route exact path={["/home", "/takePicture"]} component={Routes} />
+          {/* <Route exact path="/login" component={Login} /> */}
+          {/* <Route exact path="/register" component={Register} /> */}
+          {/* <PrivateRoute exact path="/takePicture" component={Capture} /> */}
+          {/* <PrivateRoute exact path="/home" component={FileUpload} /> */}
         </Switch>
       </Router>
     </Provider>

@@ -31,8 +31,8 @@ const auth = (state = initialState, action) => {
     case LOGIN_FAIL:
     case LOGOUT:
     case AUTH_ERROR:
-      // localStorage.removeItem("token");
-      // localStorage.removeItem("id");
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
       return {
         ...state,
         token: null,
@@ -40,7 +40,6 @@ const auth = (state = initialState, action) => {
         user: null,
       };
     case USER_LOADED:
-      // localStorage.setItem("token",token);
       return {
         ...state,
         isAuthenticated: true,

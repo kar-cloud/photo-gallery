@@ -2,8 +2,9 @@ import React, { useState, useRef, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import Caption from "./Caption";
 import { addToGallery } from "../redux/actions/photos";
+import Sidebar from "./Sidebar";
 
-const Capture = (props) => {
+const Capture = () => {
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("temp");
   const [caption, setCaption] = useState();
@@ -77,8 +78,9 @@ const Capture = (props) => {
   };
 
   return (
-    <div>
-      <div>
+    <div id="outer-container">
+      <Sidebar pageWrapId={"page-wrap"} outerContainerId="outer-container" />
+      <div id="page-wrap">
         <div className="leftSide">
           <video id="video" ref={videoRef}></video>
           <button
