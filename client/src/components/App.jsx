@@ -9,6 +9,8 @@ import StartPage from "./StartPage";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
 import { makeStyles } from "@material-ui/core/styles";
+import WebCamModal from "./modals/WebCamModal";
+import Capture from "./Capture";
 
 const useStyles = makeStyles(
   {
@@ -38,7 +40,8 @@ const App = () => {
           <Route exact path="/" component={StartPage} />
           <Route exact path="/login" component={Login} />
           <Route exact path="/register" component={Register} />
-          <PrivateRoute exact path="/home" component={FileUpload} />
+          <Route exact path="/takePicture" component={Capture} />
+          <Route exact path="/home" component={FileUpload} />
         </Switch>
       </Router>
     </Provider>

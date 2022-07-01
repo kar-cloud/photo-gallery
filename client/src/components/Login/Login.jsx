@@ -18,12 +18,6 @@ const Login = () => {
   const handleLogin = async (event) => {
     event.preventDefault();
     dispatch(login(email, password));
-
-    // if (response.data.status == true) {
-    //   setErrorMessage(response.data.success);
-    // } else {
-    //   setErrorMessage(response.data.error);
-    // }
   };
 
   return (

@@ -4,6 +4,7 @@ import InputModal from "./modals/InputModal";
 import DeleteModal from "./modals/DeleteModal";
 import UpdateIcon from "@material-ui/icons/Update";
 import DeleteIcon from "@material-ui/icons/Delete";
+import WebCamModal from "./modals/WebCamModal";
 
 function FileUpload() {
   const photos = useSelector((state) => state.user);
@@ -17,6 +18,20 @@ function FileUpload() {
     userId: "",
     imageId: "",
   });
+  const [file, setFile] = useState({
+    fileName: "",
+    fileURL: "",
+  });
+
+  const [show, setShow] = useState(false);
+  const handleShow = () => setShow(false);
+  const handleFile = () => {
+    setFile((state) => ({
+      ...state,
+      fileName: "",
+      fileURL: "",
+    }));
+  };
 
   const changeModes = () => {
     setEditMode((state) => ({
@@ -63,10 +78,29 @@ function FileUpload() {
 
   return (
     <div>
-      <h1 className="mainHeader">Your Photo Gallery</h1>
+      <div>
+        <h1 className="mainHeader">Your Photo Gallery</h1>
+        <a href="/takePicture">
+          <button
+            type="button"
+            className="btn btn-info takePicture"
+            aria-label="Upload"
+          >
+            Take picture
+          </button>
+        </a>
+      </div>
+
       <hr className="hrHome" />
       <InputModal editMode={editMode} />
       <DeleteModal deleteMode={deleteMode} />
+      <WebCamModal
+        show={show}
+        handleShow={handleShow}
+        fileName={file.fileName}
+        fileURL={file.fileURL}
+        handleFile={handleFile}
+      />
       <div className="row">
         <div
           className="card fileUpload"
@@ -103,17 +137,20 @@ function FileUpload() {
                     }}
                   >
                     <div className="fileUpload card cardDisplay actualUpAndDel">
-                      <a
-                        href={image.imageUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <img
-                          className="card-img"
-                          src={image.imageUrl}
-                          alt="Error"
-                        />
-                      </a>
+                      <img
+                        className="card-img"
+                        src={image.imageUrl}
+                        onClick={() => {
+                          setFile((state) => ({
+                            ...state,
+                            fileName: image.fileName,
+                            fileURL: image.imageUrl,
+                          }));
+                          setShow(true);
+                        }}
+                        alt="Error"
+                      />
+
                       <div className="card-body">
                         <p className="card-text">{image.caption}</p>
                       </div>

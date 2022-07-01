@@ -6,7 +6,6 @@ import { addToGallery, updateGallery } from "../../redux/actions/photos";
 
 const InputModal = (props) => {
   let editMode = props.editMode;
-  console.log(editMode);
   const dispatch = useDispatch();
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState();
@@ -27,7 +26,6 @@ const InputModal = (props) => {
   }
 
   const handleSubmitUpload = (event) => {
-    console.log("HELLO");
     event.preventDefault();
     const data = new FormData();
     data.append("id", userId);
@@ -37,7 +35,6 @@ const InputModal = (props) => {
   };
 
   const handleSubmitUpdate = (event) => {
-    console.log("HELLOE TPEJC");
     event.preventDefault();
     const data = new FormData();
     data.append("id", userId);

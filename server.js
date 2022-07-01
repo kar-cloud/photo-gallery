@@ -66,7 +66,10 @@ const storage = multer.diskStorage({
     cb(null, "client/public");
   },
   filename: (req, file, cb) => {
-    const extension = path.extname(file.originalname);
+    let extension = path.extname(file.originalname);
+    // if (!extension || extension == "") {
+    //   extension = ".png";
+    // }
     const id = uuid();
     const filePath = `uploads/${id}${extension}`;
     cb(null, filePath);
@@ -143,16 +146,18 @@ app.post("/api/v1/auth/login", async (req, res) => {
 
 app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
   let { id, caption } = req.body;
-  if (caption == "") {
+  if (caption == "" || caption == undefined || caption == null) {
     caption = "A Beautiful Memory";
   }
-  const { filename, originalname } = req.file;
-  console.log({ id, caption, filename, originalname });
+  const filePath = req.file.filename;
+  const fileName = req.body.fileName
+    ? req.body.fileName + ".png"
+    : req.file.originalname;
   const user = await User.findOne({ _id: id });
   const image = {
-    imageUrl: filename,
+    imageUrl: filePath,
     caption: caption,
-    fileName: originalname,
+    fileName: fileName,
   };
   let gallery = user.gallery;
   gallery.push(image);

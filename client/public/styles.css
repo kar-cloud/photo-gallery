@@ -109,9 +109,11 @@ textarea {
 
 .mainHeader {
   margin-top: 10px;
+  margin-left: 50px;
   margin-bottom: 5px;
+  display: inline-block;
   font-size: 70px;
-  text-align: center;
+  text-align: left;
   font-family: "Lora", serif;
 }
 
@@ -232,13 +234,13 @@ textarea {
   border: 2px solid gray;
 }
 
-.modal-body {
+/* .modal-body {
   display: inline-block;
 }
 
 .modal {
   top: 15%;
-}
+} */
 
 .card-img {
   height: 12rem;
@@ -250,15 +252,15 @@ textarea {
   background-color: #fffdf9;
 }
 
-.modal-dialog {
+/* .modal-dialog {
   width: 28%;
-}
+} */
 
-.modal-content {
+/* .modal-content {
   width: 90%;
   border: 4.6px dashed black;
   border-radius: 33px;
-}
+} */
 
 .row {
   margin-bottom: 50px;
@@ -311,10 +313,10 @@ textarea {
     height: 10rem;
   }
 
-  .modal-dialog {
+  /* .modal-dialog {
     width: 45%;
     margin-left: auto;
-  }
+  } */
 
   .card-body {
     padding-top: 0.85rem;
@@ -390,10 +392,10 @@ textarea {
     border: 1px solid black;
   }
 
-  .modal-dialog {
+  /* .modal-dialog {
     width: 82%;
     margin-left: auto;
-  }
+  } */
 
   .card-text {
     font-size: 0.87rem;
