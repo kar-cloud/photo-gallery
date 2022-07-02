@@ -25,6 +25,7 @@ const useStyles = makeStyles(
 
 const App = () => {
   const classes = useStyles();
+
   useEffect(() => {
     if (localStorage.getItem("token")) {
       const token = localStorage.getItem("token");
@@ -33,7 +34,7 @@ const App = () => {
     } else {
       store.dispatch(loadUser(null, null));
     }
-  }, []);
+  });
 
   return (
     <Provider store={store}>
