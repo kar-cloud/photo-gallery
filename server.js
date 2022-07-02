@@ -19,7 +19,6 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-
 // build code
 app.use(express.static(path.join(__dirname, "/client/build")));
 
@@ -62,12 +61,12 @@ const User = new mongoose.model("User", userSchema);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "client/public");
+    cb(null, "client/build");
   },
   filename: (req, file, cb) => {
     let extension = path.extname(file.originalname);
     const id = uuid();
-    const filePath = `uploads/${id}${extension}`;
+    const filePath = `images/${id}${extension}`;
     cb(null, filePath);
   },
 });
@@ -142,6 +141,7 @@ app.post("/api/v1/auth/login", async (req, res) => {
 
 app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
   let { id, caption } = req.body;
+  console.log({ id, caption });
   if (caption == "" || caption == undefined || caption == null) {
     caption = "A Beautiful Memory";
   }

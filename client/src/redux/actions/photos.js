@@ -9,9 +9,6 @@ import {
 
 export const addToGallery = (data) => async (dispatch) => {
   try {
-    for (var pair of data.entries()) {
-      console.log(pair[0] + ", " + pair[1]);
-    }
     const response = await axios.post("/api/v1/upload", data, {
       headers: { "Content-Type": "multipart/form-data" },
     });
