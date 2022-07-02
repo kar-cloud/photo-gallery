@@ -19,8 +19,29 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-// app.use(express.static(path.join(__dirname, "build")));
-app.use(express.static(path.join(__dirname, "client/public")));
+
+// build code
+app.use(express.static(path.join(__dirname, "build")));
+
+app.get("/*", (req, res) => {
+  res.sendFile(path.join(__dirname, "build", "index.html"));
+});
+
+// app.get("/*", function (req, res) {
+//   res.sendFile(
+//     path.join(__dirname, "client/public/index.html"),
+//     function (err) {
+//       if (err) {
+//         res.status(500).send(err);
+//         res.send(err);
+//       }
+//     }
+//   );
+// });
+
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static("client/build"));
+}
 
 connectDB();
 
@@ -199,13 +220,6 @@ app.delete("/api/v1/delete", async (req, res) => {
     deleted: image,
   });
 });
-
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
-  app.get("/*", (req, res) => {
-    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
-  });
-}
 
 app.listen(process.env.PORT || 5000, () => {
   console.log("listening at server");
