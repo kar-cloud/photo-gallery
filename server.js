@@ -21,26 +21,14 @@ app.use(
 app.use(bodyParser.json());
 
 // build code
-app.use(express.static(path.join(__dirname, "build")));
-
-app.get("/*", (req, res) => {
-  res.sendFile(path.join(__dirname, "build", "index.html"));
-});
-
-// app.get("/*", function (req, res) {
-//   res.sendFile(
-//     path.join(__dirname, "client/public/index.html"),
-//     function (err) {
-//       if (err) {
-//         res.status(500).send(err);
-//         res.send(err);
-//       }
-//     }
-//   );
-// });
+app.use(express.static(path.join(__dirname, "/client/build")));
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("client/build"));
+  app.get("/*", (req, res) => {
+    res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+  });
+  // app.use(express.static("client/build"));
+  app.use(express.static(path.join(__dirname, "client", "build")));
 }
 
 connectDB();
