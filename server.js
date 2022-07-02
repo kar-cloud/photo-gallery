@@ -83,8 +83,11 @@ const signedUserJwt = async (userId) => {
 
 app.get("/api/v1/user", async (req, res) => {
   const { userId } = req.query;
+  console.log(req.query);
   const user = await User.findOne({ _id: userId });
+  console.log(user);
   return res.status(200).json({
+    success: "Information fetched",
     gallery: user.gallery,
   });
 });
