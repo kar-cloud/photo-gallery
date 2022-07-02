@@ -45,10 +45,6 @@ const App = () => {
             component={PublicRoutes}
           />
           <Route exact path={["/home", "/takePicture"]} component={Routes} />
-          {/* <Route exact path="/login" component={Login} /> */}
-          {/* <Route exact path="/register" component={Register} /> */}
-          {/* <PrivateRoute exact path="/takePicture" component={Capture} /> */}
-          {/* <PrivateRoute exact path="/home" component={FileUpload} /> */}
         </Switch>
       </Router>
     </Provider>

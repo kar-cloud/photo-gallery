@@ -2,9 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require("cors");
 
-const fileUpload = require("express-fileupload");
 const multer = require("multer");
 const uuid = require("uuid").v4;
 
@@ -21,18 +19,8 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-// app.use(fileUpload());
-// app.use(cors());
 app.use(express.static(path.join(__dirname, "build")));
 connectDB();
-
-// mongoose.connect(
-//   "mongodb+srv://admin-karan:password123098@cluster0.vhvfy.mongodb.net/PhotosDB",
-//   {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-//   }
-// );
 
 const userSchema = new mongoose.Schema(
   {
@@ -67,9 +55,6 @@ const storage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     let extension = path.extname(file.originalname);
-    // if (!extension || extension == "") {
-    //   extension = ".png";
-    // }
     const id = uuid();
     const filePath = `uploads/${id}${extension}`;
     cb(null, filePath);
@@ -213,139 +198,9 @@ app.delete("/api/v1/delete", async (req, res) => {
   });
 });
 
-// const photoSchema = new mongoose.Schema({
-//   imageURL: String,
-//   caption: String,
-// });
-
-// const Photo = new mongoose.model("Photo", photoSchema);
-
-// app.post("/upload", function (req, res) {
-//   if (!req.files) {
-//     return res.status(400).json({ msg: "No files were uploaded" });
-//   }
-
-//   const file = req.files.file;
-//   const fileCaption = req.body.fileCaption;
-
-//   const photoPost = new Photo({
-//     imageURL: `/uploads/${file.name}`,
-//     caption: fileCaption,
-//   });
-
-//   photoPost.save((err) => {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("Saved");
-//     }
-//   });
-
-//   file.mv(`${__dirname}/build/uploads/${file.name}`, function (err) {
-//     if (err) {
-//       return res
-//         .status(500)
-//         .json({ msg500: "There was a problem with the server" });
-//     }
-//     res.json({ fileName: file.name, filePath: `/uploads/${file.name}` });
-//   });
-// });
-
-// app.get("/api", (req, res) => {
-//   Photo.find({})
-//     .then((data) => {
-//       res.json(data);
-//     })
-//     .catch((err) => {
-//       console.log(err);
-//     });
-// });
-
 app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "build", "index.html"));
 });
-
-// app.get("/*", function (req, res) {
-//   res.sendFile(
-//     path.join(__dirname, "client/public/index.html"),
-//     function (err) {
-//       if (err) {
-//         res.status(500).send(err);
-//         res.send(err);
-//       }
-//     }
-//   );
-// });
-
-// app.get("/", (req, res) => {
-//   res.redirect("/home");
-// });
-
-// app.post("/delete", (req, res) => {
-//   const idPost = req.body.id;
-//   Photo.deleteOne({ _id: idPost }, function (err) {
-//     if (err) {
-//       console.log(err);
-//     } else {
-//       console.log("Item deleted successfully");
-//     }
-//   });
-// });
-
-// app.post("/update", (req, res) => {
-// let updatedCaption = req.body.updatedCaption;
-// const id = req.body.id;
-//   if (updatedCaption === "undefined") {
-//     const ifCaptionUndefined = req.body.ifCaptionUndefined;
-//     updatedCaption = ifCaptionUndefined;
-//   }
-//   if (updatedCaption === "") {
-//     updatedCaption = "A Beautiful Memory";
-//   }
-//   console.log(updatedCaption);
-//   if (req.files === null) {
-//     Photo.updateOne(
-//       { _id: id },
-//       { $set: { caption: updatedCaption } },
-//       function (err) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           console.log("record updated");
-//         }
-//       }
-//     );
-//   } else {
-//     const updatedFile = req.files.updatedFile;
-//     console.log(updatedFile.name);
-//     updatedFile.mv(
-//       `${__dirname}/client/public/uploads/${updatedFile.name}`,
-//       function (err) {
-//         if (err) {
-//           return res
-//             .status(500)
-//             .json({ msg500: "There was a problem with the server" });
-//         }
-//       }
-//     );
-//     Photo.updateOne(
-//       { _id: id },
-//       {
-//         $set: {
-//           imageURL: `/uploads/${updatedFile.name}`,
-//           caption: updatedCaption,
-//         },
-//       },
-//       function (err) {
-//         if (err) {
-//           console.log(err);
-//         } else {
-//           console.log("record updated");
-//         }
-//       }
-//     );
-//   }
-// });
 
 if (process.env.NODE_ENV === "production") {
   app.use(express.static("client/build"));
@@ -354,5 +209,3 @@ if (process.env.NODE_ENV === "production") {
 app.listen(process.env.PORT || 5000, () => {
   console.log("listening at server");
 });
-
-// app.set("port", process.env.PORT || 5000);

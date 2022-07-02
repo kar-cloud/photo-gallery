@@ -1,4 +1,4 @@
 {
-  "mongoURI": "mongodb://localhost/UsersDB",
+  "mongoURI": "mongodb+srv://admin-karan:password123098@cluster0.vhvfy.mongodb.net/UsersDB",
   "jwtToken": "secretKeyToJWT"
 }
