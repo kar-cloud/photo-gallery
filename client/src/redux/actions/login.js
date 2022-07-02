@@ -52,6 +52,7 @@ export const loadUser = (token, userId) => async (dispatch) => {
           userId: userId,
         },
       });
+      console.log(response);
       dispatch({
         type: USER_LOADED,
         payload: response.data,
