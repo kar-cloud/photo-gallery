@@ -20,6 +20,7 @@ app.use(
 );
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "build")));
+app.use(express.static(path.join(__dirname, "client/public")));
 connectDB();
 
 const userSchema = new mongoose.Schema(
