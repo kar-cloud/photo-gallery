@@ -21,6 +21,7 @@ app.use(
 app.use(bodyParser.json());
 
 // build code
+app.use(express.static(path.join(__dirname, "client", "build")));
 if (process.env.NODE_ENV === "production") {
   app.get("/*", (req, res) => {
     res.sendFile(path.join(__dirname, "client", "build", "index.html"));
