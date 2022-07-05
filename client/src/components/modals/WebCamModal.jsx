@@ -13,7 +13,6 @@ const WebCamModal = (props) => {
         size="lg"
         show={props.show}
         onHide={handleClose}
-        // backdrop="static"
         keyboard={false}
         style={{
           background: "rgba(0,0,0,0.23)",
@@ -28,16 +27,6 @@ const WebCamModal = (props) => {
             src={props.fileURL}
             style={{ width: "100%" }}
           />
-          {/* <div className="embed-responsive embed-responsive-16by9">
-            <iframe
-              id="cartoonVideo"
-              className="embed-responsive-item"
-              width="560"
-              height="315"
-              src={props.video}
-              allowFullScreen
-            ></iframe>
-          </div> */}
         </Modal.Body>
       </Modal>
     </div>

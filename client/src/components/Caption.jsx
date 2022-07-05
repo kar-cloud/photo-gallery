@@ -22,14 +22,17 @@ const Caption = (props) => {
       <label htmlFor="messageText" className="col-form-label labelCaption">
         Caption
       </label>
-      <textarea
-        id="messageText"
-        maxLength="60"
-        rows="3"
-        value={props.caption}
-        onChange={handleChange}
-        placeholder="A Beautiful Memory"
-      ></textarea>
+      <div className="wrapper">
+        <textarea
+          id="messageText"
+          maxLength="60"
+          rows="3"
+          className="contactField"
+          value={props.caption}
+          onChange={handleChange}
+          placeholder="A Beautiful Memory"
+        ></textarea>
+      </div>
       <div className="captionLeft">{captionLeft}</div>
     </div>
   );

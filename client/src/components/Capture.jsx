@@ -53,8 +53,8 @@ const Capture = () => {
   };
 
   const takePhoto = () => {
-    const width = 500;
-    const height = 400;
+    const width = 420;
+    const height = 300;
     let video = videoRef.current;
     let photo = photoRef.current;
     photo.width = width;
@@ -62,9 +62,7 @@ const Capture = () => {
     let ctx = photo.getContext("2d");
     ctx.drawImage(video, 0, 0, width, height);
     var dataURL = photo.toDataURL();
-    // // console.log(dataURL);
     const fileNa = dataURLToBlob(dataURL);
-    console.log(fileNa);
     setFile(fileNa);
   };
 
@@ -81,34 +79,55 @@ const Capture = () => {
     <div id="outer-container">
       <Sidebar pageWrapId={"page-wrap"} outerContainerId="outer-container" />
       <div id="page-wrap">
-        <div className="leftSide">
-          <video id="video" ref={videoRef}></video>
-          <button
-            type="submit"
-            className="btn btn-info updateAndUploadModalButton"
-            aria-label="Upload"
-            onClick={takePhoto}
-          >
-            Take Picture
-          </button>
-        </div>
-        <div className="rightSide">
-          <canvas ref={photoRef}></canvas>
-          <input
-            placeholder="Set FileName"
-            onChange={(event) => {
-              setFileName(event.target.value);
-            }}
-          />
-          <Caption setCaption={setCaption} caption={caption} />
-          <button
-            type="submit"
-            className="btn btn-info updateAndUploadModalButton"
-            aria-label="Upload"
-            onClick={savePicture}
-          >
-            Save Picture
-          </button>
+        <div className="container-fluid laptopSize">
+          <div className="row" id="privateChatContainer">
+            <div className="sideBoxPrivateChat">
+              <video id="video" ref={videoRef}></video>
+              <button
+                type="submit"
+                className="btn btn-info updateAndUploadModalButton"
+                aria-label="Upload"
+                onClick={takePhoto}
+              >
+                Take Picture
+              </button>
+            </div>
+            <div className="privateMainChat">
+              <div className="preview">
+                {file ? null : (
+                  <img
+                    src="/images/no-preview.jpg"
+                    height={300}
+                    width={420}
+                    style={{ marginBottom: "10px" }}
+                    alt="error"
+                  />
+                )}
+                <canvas
+                  ref={photoRef}
+                  style={
+                    file ? { display: "inline-block" } : { display: "none" }
+                  }
+                ></canvas>
+                <input
+                  placeholder="Set FileName"
+                  className="contactField"
+                  onChange={(event) => {
+                    setFileName(event.target.value);
+                  }}
+                />
+                <Caption setCaption={setCaption} caption={caption} />
+                <button
+                  type="submit"
+                  className="btn btn-info updateAndUploadModalButton"
+                  aria-label="Upload"
+                  onClick={savePicture}
+                >
+                  Save Picture
+                </button>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
