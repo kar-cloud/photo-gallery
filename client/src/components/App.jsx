@@ -1,18 +1,16 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import { Provider } from "react-redux";
 import store from "../store";
 import { loadUser } from "../redux/actions/login";
 import PrivateRoute from "./routing/PrivateRoute";
-import FileUpload from "./Home";
 import StartPage from "./StartPage";
 import Login from "./Login/Login";
 import Register from "./Login/Register";
 import { makeStyles } from "@material-ui/core/styles";
-import WebCamModal from "./modals/WebCamModal";
+import Home from "../components/Home"
 import Capture from "./Capture";
-import PublicRoutes from "./routing/PublicRoutes";
-import Routes from "./routing/Routes";
+
 
 const useStyles = makeStyles(
   {
@@ -39,14 +37,27 @@ const App = () => {
   return (
     <Provider store={store}>
       <Router>
-        <Switch>
+        <Routes>
+          <Route path="/" element={<StartPage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route
-            exact
-            path={["/", "/login", "/register"]}
-            component={PublicRoutes}
+            path="/home"
+            element={
+              <PrivateRoute>
+                <Home />
+              </PrivateRoute>
+            }
           />
-          <Route exact path={["/home", "/takePicture"]} component={Routes} />
-        </Switch>
+          <Route
+            path="/takePicture"
+            element={
+              <PrivateRoute>
+                <Capture />
+              </PrivateRoute>
+            }
+          />
+        </Routes>
       </Router>
     </Provider>
   );

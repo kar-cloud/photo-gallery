@@ -1,7 +1,7 @@
 import axios from "axios";
 import { React, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link, Redirect } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import Error from "./Error";
 import { register } from "../../redux/actions/login";
 
@@ -13,7 +13,7 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
 
   if (isAuthenticated) {
-    return <Redirect to="/home" />;
+    return <Navigate to="/home" />;
   }
 
   const handleLogin = async (event) => {

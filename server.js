@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require('cors');
 
 const multer = require("multer");
 const uuid = require("uuid").v4;
@@ -13,12 +14,15 @@ const { signedJWT } = require("./utils/jwt.util");
 
 const app = express();
 
+app.use(cors());
+
 app.use(
   bodyParser.urlencoded({
     extended: false,
   })
 );
 app.use(bodyParser.json());
+
 
 // build code
 app.use(express.static(path.join(__dirname, "client", "build")));
