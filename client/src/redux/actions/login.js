@@ -8,9 +8,11 @@ import {
   AUTH_ERROR,
 } from "../common/types";
 
+const BASE_URL = "https://photo-gallery-ns4y.onrender.com"
+
 export const register = (email, password) => async (dispatch) => {
   try {
-    const response = await axios.post("/api/v1/auth/register", {
+    const response = await axios.post(BASE_URL + "/api/v1/auth/register", {
       email: email,
       password: password,
     });
@@ -27,7 +29,7 @@ export const register = (email, password) => async (dispatch) => {
 
 export const login = (email, password) => async (dispatch) => {
   try {
-    const response = await axios.post("/api/v1/auth/login", {
+    const response = await axios.post(BASE_URL + "/api/v1/auth/login", {
       email: email,
       password: password,
     });
@@ -46,7 +48,7 @@ export const loadUser = (token, userId) => async (dispatch) => {
   try {
     console.log({ token, userId });
     if (token) {
-      const response = await axios.get("/api/v1/user", {
+      const response = await axios.get(BASE_URL + "/api/v1/user", {
         params: {
           token: token,
           userId: userId,
