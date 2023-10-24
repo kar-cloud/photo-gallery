@@ -8,7 +8,7 @@ import {
   AUTH_ERROR,
 } from "../common/types";
 
-const BASE_URL = "https://photo-gallery-ns4y.onrender.com"
+const BASE_URL = "http://localhost:5000";
 
 export const register = (email, password) => async (dispatch) => {
   try {

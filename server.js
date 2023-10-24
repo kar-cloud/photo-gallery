@@ -2,7 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
-const cors = require('cors');
+const cors = require("cors");
 
 const multer = require("multer");
 const uuid = require("uuid").v4;
@@ -22,7 +22,6 @@ app.use(
   })
 );
 app.use(bodyParser.json());
-
 
 // build code
 app.use(express.static(path.join(__dirname, "client", "build")));
@@ -66,7 +65,7 @@ const User = new mongoose.model("User", userSchema);
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, "client/build");
+    cb(null, "client/public/");
   },
   filename: (req, file, cb) => {
     let extension = path.extname(file.originalname);
@@ -88,9 +87,7 @@ const signedUserJwt = async (userId) => {
 
 app.get("/api/v1/user", async (req, res) => {
   const { userId } = req.query;
-  console.log(req.query);
   const user = await User.findOne({ _id: userId });
-  console.log(user);
   return res.status(200).json({
     success: "Information fetched",
     gallery: user.gallery,
@@ -149,7 +146,6 @@ app.post("/api/v1/auth/login", async (req, res) => {
 
 app.post("/api/v1/upload", upload.single("image"), async (req, res) => {
   let { id, caption } = req.body;
-  console.log({ id, caption });
   if (caption == "" || caption == undefined || caption == null) {
     caption = "A Beautiful Memory";
   }
@@ -200,7 +196,6 @@ app.post("/api/v1/update", upload.single("image"), async (req, res) => {
 });
 
 app.delete("/api/v1/delete", async (req, res) => {
-  console.log(req.query, req.body);
   const { userId, imageId } = req.query;
   const user = await User.findOne({ _id: userId });
   let image;

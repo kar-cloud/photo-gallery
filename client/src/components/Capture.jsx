@@ -16,6 +16,7 @@ const Capture = () => {
   let photoRef = useRef(null);
 
   const getUserCamera = () => {
+    console.log("HEI");
     navigator.mediaDevices
       .getUserMedia({
         video: { width: 500, height: 400 },
@@ -29,6 +30,7 @@ const Capture = () => {
         }
       })
       .catch((err) => {
+        console.log(err);
         console.error(err);
       });
   };
